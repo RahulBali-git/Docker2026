@@ -4,7 +4,7 @@ env:
      Docker-Username: /myapp/docker-credentials/username
      Docker-Password: /myapp/docker-credentials/password
      Docker-url: /myapp/docker-registry/url
-Phases:
+phases:
    install:
       runtime-versions:
          python: 3.11     
