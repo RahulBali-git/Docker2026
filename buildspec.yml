@@ -3,7 +3,7 @@ env:
   parameter-store:
      Docker-Username:/myapp/docker-credentials/username
      Docker-Password:/myapp/docker-credentials/password
-     Docker-url:
+     Docker-url:/myapp/docker-registry/url
 Phases:
    install:
       runtime-versions:
