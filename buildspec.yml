@@ -1,4 +1,4 @@
-version 0.2
+version: 0.2
 env:
   parameter-store:
      Docker-Username:/myapp/docker-credentials/username
