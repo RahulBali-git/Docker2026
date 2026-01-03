@@ -1,9 +1,9 @@
 version: 0.2
 env:
   parameter-store:
-     Docker-Username:/myapp/docker-credentials/username
-     Docker-Password:/myapp/docker-credentials/password
-     Docker-url:/myapp/docker-registry/url
+     Docker-Username: /myapp/docker-credentials/username
+     Docker-Password: /myapp/docker-credentials/password
+     Docker-url: /myapp/docker-registry/url
 Phases:
    install:
       runtime-versions:
@@ -11,11 +11,11 @@ Phases:
    pre_build:
       commands:
          - echo "Installing dependencies"
-         - pip install -r awsbuild/requirements.txt
+         - pip install -r Docker2026/requirements.txt
    build:
       commands:
         - echo "starting build process"
-        - cd awsbuild/
+        - cd Docker2026/
         - echo "Login to docker"
         - echo "Docker-Password" | docker login -u "Docker-Username" --password-stdin
         - docker build -t "simple-python-flask-app:latest"
