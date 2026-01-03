@@ -1,0 +1,29 @@
+version 0.2
+env:
+  parameter-store:
+     Docker-Username:/myapp/docker-credentials/username
+     Docker-Password:/myapp/docker-credentials/password
+     Docker-url:
+Phases:
+   install:
+      runtime-versions:
+         python: 3.11     
+   pre_build:
+      commands:
+         - echo "Installing dependencies"
+         - pip install -r awsbuild/requirements.txt
+   build:
+      commands:
+        - echo "starting build process"
+        - cd awsbuild/
+        - echo "Login to docker"
+        - echo "Docker-Password" | docker login -u "Docker-Username" --password-stdin
+        - docker build -t "simple-python-flask-app:latest"
+        - docker push "simple-python-flask-app:latest"
+   post_build:
+      commands:
+        - echo "Build completed successully"
+   artifacts:
+     files:
+       - '**/*'
+     base-directory: ../simple-python-app
