@@ -1,29 +1,24 @@
 version: 0.2
 env:
   parameter-store:
-     Docker-Username: /myapp/docker-credentials/username
-     Docker-Password: /myapp/docker-credentials/password
-     Docker-url: /myapp/docker-registry/url
+    DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
+    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
+    DOCKER_REGISTRY_URL: /myapp/docker-registry/url
 phases:
-   install:
-      runtime-versions:
-         python: 3.11     
-   pre_build:
-      commands:
-         - echo "Installing dependencies"
-         - pip install -r Docker2026/requirements.txt
-   build:
-      commands:
-        - echo "starting build process"
-        - cd Docker2026/
-        - echo "Login to docker"
-        - echo "Docker-Password" | docker login -u "Docker-Username" --password-stdin
-        - docker build -t "simple-python-flask-app:latest"
-        - docker push "simple-python-flask-app:latest"
-   post_build:
-      commands:
-        - echo "Build completed successully"
-   artifacts:
-     files:
-       - '**/*'
-     base-directory: ../simple-python-app
+  install:
+    runtime-versions:
+      python: 3.11     
+  pre_build:
+    commands:
+    - echo "Installing dependencies"
+    - pip install -r requirements.txt
+  build:
+    commands:
+    - echo "starting build process"
+    - echo "Login to docker"
+    - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+    - docker build -t "simple-python-flask-app:latest"
+    - docker push "simple-python-flask-app:latest"
+  post_build:
+    commands:
+    - echo "Build completed successully"
